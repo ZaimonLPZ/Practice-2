@@ -99,4 +99,46 @@ public class MotorGramatica {
         }
         return null;
     }
+
+    public NodoArbol generarAST(NodoArbol parseTreeRaiz) {
+        if (parseTreeRaiz == null) return null;
+
+
+        NodoArbol ast = parseTreeRaiz.clonar();
+        ast = podarArbol(ast);
+        return ast;
+    }
+
+    private NodoArbol podarArbol(NodoArbol nodo) {
+        if (nodo == null) return null;
+
+
+        for (int i = 0; i < nodo.hijos.size(); i++) {
+            nodo.hijos.set(i, podarArbol(nodo.hijos.get(i)));
+        }
+
+
+        if (noTerminales.contains(nodo.valor) && nodo.hijos.size() == 1) {
+            return nodo.hijos.get(0); // El hijo sube y reemplaza al padre
+        }
+
+
+        if (nodo.hijos.size() == 3 && nodo.hijos.get(0).valor.equals("(") && nodo.hijos.get(2).valor.equals(")")) {
+            return nodo.hijos.get(1); // Nos quedamos solo con la expresión de adentro
+        }
+
+
+        // Ejemplo: E -> E + T. El '+' debería ser la nueva raíz de ese subárbol.
+        if (nodo.hijos.size() == 3) {
+            String operador = nodo.hijos.get(1).valor;
+            if (operador.equals("+") || operador.equals("-") || operador.equals("*") || operador.equals("/")) {
+                NodoArbol nuevoPadre = new NodoArbol(operador);
+                nuevoPadre.hijos.add(nodo.hijos.get(0)); // Izquierda
+                nuevoPadre.hijos.add(nodo.hijos.get(2)); // Derecha
+                return nuevoPadre;
+            }
+        }
+
+        return nodo;
+    }
 }
