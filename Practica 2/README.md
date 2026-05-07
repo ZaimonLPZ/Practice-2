@@ -32,7 +32,7 @@ muestra paso a paso la cadena derivada.
 
 **Derivación Flexible:** Soporta derivación por el extremo izquierdo (Leftmost) y extremo derecho (Rightmost).
 
-**Árbol Gráfico:** Visualización en tiempo real con nodos circulares y conexiones jerárquicas.
+**Árboles Gráfico:** Visualización en tiempo real con nodos circulares y conexiones jerárquicas, Mostrando el AST y el ASS.
 
 **Identificación Inteligente:** Reconocimiento automático de terminales genéricos como id (letras) y num (dígitos 0-9).
 
